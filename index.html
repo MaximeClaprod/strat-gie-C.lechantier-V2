@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C.lechantier × SMARKUP — Suivi stratégique</title>
+<style>
+  :root {
+    --indigo: #1E1B4B;
+    --indigo-light: #EEEDF7;
+    --indigo-mid: #534AB7;
+    --orange: #FF5C35;
+    --orange-light: #FFF0EB;
+    --green: #1A7A4A;
+    --green-light: #E8F5EE;
+    --red: #C0392B;
+    --red-light: #FDEDEC;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --gray-100: #F5F5F3;
+    --gray-200: #E8E8E5;
+    --gray-400: #9E9E99;
+    --gray-700: #444441;
+    --text: #1a1a18;
+    --text-muted: #666662;
+    --border: #E0DFD8;
+    --font: 'Helvetica Neue', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: #FAF9F7; color: var(--text); font-size: 14px; line-height: 1.6; }
+  .page { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+  /* Header */
+  .page-header { border-bottom: 2px solid var(--indigo); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .page-header h1 { font-size: 22px; font-weight: 700; color: var(--indigo); letter-spacing: -.3px; }
+  .page-header .meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: .75rem; }
+  .meta-item { font-size: 12px; color: var(--text-muted); }
+  .meta-item strong { color: var(--text); }
+
+  /* Positioning box */
+  .positioning-box { background: var(--indigo); border-radius: 10px; padding: 1.5rem 1.75rem; margin-bottom: 2rem; }
+  .positioning-box .tagline { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -.2px; margin-bottom: .3rem; }
+  .positioning-box .sub { font-size: 15px; color: #AAAACC; font-style: italic; margin-bottom: 1rem; }
+  .positioning-box .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
+  .ptag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .ptag-orange { background: var(--orange); color: #fff; }
+  .ptag-teal { background: #1D9E75; color: #fff; }
+  .ptag-gray { background: rgba(255,255,255,.15); color: #ccc; }
+
+  /* Sections */
+  .section { margin-bottom: 2.5rem; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: .5rem; margin-bottom: 1.25rem; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--gray-100); font-weight: 600; text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); white-space: nowrap; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--gray-100); }
+  .table-wrap { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+
+  /* Do/Dont */
+  .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+  .do-box { background: var(--green-light); border-radius: 8px; padding: .85rem 1rem; }
+  .dont-box { background: var(--red-light); border-radius: 8px; padding: .85rem 1rem; }
+  .box-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .5rem; }
+  .do-box .box-label { color: var(--green); }
+  .dont-box .box-label { color: var(--red); }
+  .box-item { font-size: 13px; color: var(--text); padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,.07); }
+  .box-item:last-child { border-bottom: none; }
+
+  /* Offer cards */
+  .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+  .offer-card { border: 1px solid var(--border); border-radius: 8px; padding: .9rem 1.1rem; background: #fff; }
+  .offer-card.abonnement { border-left: 3px solid var(--orange); }
+  .offer-card.option { background: var(--gray-100); }
+  .offer-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: .2rem; }
+  .offer-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: .5rem; }
+  .offer-price { font-size: 18px; font-weight: 700; color: var(--indigo); }
+  .offer-price small { font-size: 11px; font-weight: 400; color: var(--text-muted); display: block; }
+  .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-bottom: .35rem; text-transform: uppercase; letter-spacing: .05em; }
+  .badge-indigo { background: var(--indigo-light); color: var(--indigo); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+
+  /* Sequence cards */
+  .seq-card { border: 1px solid var(--border); border-radius: 8px; margin-bottom: .75rem; overflow: hidden; }
+  .seq-header { display: flex; align-items: center; gap: 12px; padding: .75rem 1.1rem; border-bottom: 1px solid var(--border); }
+  .seq-num { font-size: 11px; font-weight: 700; color: var(--indigo); background: var(--indigo-light); padding: 3px 8px; border-radius: 4px; }
+  .seq-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .seq-status { margin-left: auto; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+  .status-ok { background: var(--green-light); color: var(--green); }
+  .status-warn { background: var(--amber-light); color: var(--amber); }
+  .status-err { background: var(--red-light); color: var(--red); }
+  .seq-body { padding: .85rem 1.1rem; }
+  .seq-body h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); margin-bottom: .5rem; margin-top: .75rem; }
+  .seq-body h4:first-child { margin-top: 0; }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box { width: 14px; height: 14px; border: 1.5px solid var(--gray-400); border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+  .check-date { margin-left: auto; font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+  .decision-list { list-style: none; padding: 0; }
+  .decision-list li { font-size: 13px; padding: 4px 0 4px 14px; position: relative; border-bottom: 1px solid var(--border); }
+  .decision-list li:before { content: '→'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+  .decision-list li:last-child { border-bottom: none; }
+
+  /* Alert box */
+  .alert { border-radius: 8px; padding: .85rem 1rem; margin-bottom: 1rem; font-size: 13px; line-height: 1.6; }
+  .alert-orange { background: var(--orange-light); border-left: 3px solid var(--orange); }
+  .alert-indigo { background: var(--indigo-light); border-left: 3px solid var(--indigo); }
+  .alert-green { background: var(--green-light); border-left: 3px solid var(--green); }
+  .alert strong { font-weight: 700; }
+
+  /* KPI table highlight */
+  .kpi-target { font-weight: 700; color: var(--green); }
+  .kpi-warn { font-weight: 700; color: var(--amber); }
+  .kpi-red { font-weight: 700; color: var(--red); }
+
+  /* Journal */
+  .journal-row td:first-child { font-weight: 600; color: var(--indigo); white-space: nowrap; }
+
+  /* Vision */
+  .vision-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .vision-card { border: 1px solid var(--border); border-radius: 8px; padding: .85rem 1rem; background: #fff; }
+  .vision-horizon { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin-bottom: .25rem; }
+  .vision-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+  .vision-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  @media(max-width:640px) {
+    .offer-grid, .dodont, .vision-grid { grid-template-columns: 1fr; }
+    .page { padding: 1.5rem 1rem 3rem; }
+  }
+
+  /* ── ÉDITEUR INLINE ── */
+  .edit-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: var(--indigo); color: #fff;
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 20px; font-size: 12px; font-family: 'Helvetica Neue', Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+  .edit-bar .eb-logo { font-weight: 700; color: var(--orange); margin-right: 4px; }
+  .edit-bar .eb-hint { color: #AAAACC; flex: 1; }
+  .edit-bar button {
+    font-size: 11px; font-weight: 700; border: none; border-radius: 5px;
+    padding: 4px 12px; cursor: pointer;
+  }
+  .eb-toggle { background: var(--orange); color: #fff; }
+  .eb-toggle.active { background: #fff; color: var(--indigo); }
+  .eb-reset { background: rgba(255,255,255,.15); color: #fff; }
+  .eb-save { background: var(--green); color: #fff; }
+  .eb-saved { font-size: 11px; color: #8BE8A0; display: none; }
+
+  body.edit-mode { padding-top: 42px; }
+
+  body.edit-mode [data-editable]:hover {
+    outline: 2px dashed rgba(255,92,53,.6);
+    border-radius: 3px;
+    cursor: text;
+  }
+  body.edit-mode [data-editable]:focus {
+    outline: 2px solid var(--orange);
+    border-radius: 3px;
+    background: rgba(255,92,53,.04);
+  }
+  [data-editable]:focus { outline: none; }
+
+  /* Editable td cells */
+  body.edit-mode td[data-editable]:hover,
+  body.edit-mode td[data-editable]:focus {
+    background: rgba(255,92,53,.07) !important;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <h1>🏗️ C.lechantier × SMARKUP — Suivi stratégique</h1>
+    <div class="meta">
+      <div class="meta-item"><strong>Mission :</strong> Structurer la croissance commerciale · 800K€ CA 2026 · Electra &lt; 40%</div>
+      <div class="meta-item"><strong>Format :</strong> Done With You · 1 journée/semaine (mercredis)</div>
+      <div class="meta-item"><strong>Démarrage :</strong> 26 mars 2026</div>
+    </div>
+  </div>
+
+  <!-- POSITIONNEMENT -->
+  <div class="positioning-box">
+    <div class="tagline">C.lechantier — Vos chantiers depuis n'importe où.</div>
+    <div class="sub">Conduisez, prouvez, valorisez.</div>
+    <div class="meta-row">
+      <span class="ptag ptag-orange">Grands groupes BTP · Eiffage · Vinci · NGE</span>
+      <span class="ptag ptag-teal">IRVE lookalike · Electra · Driveco · BP Pulse</span>
+      <span class="ptag ptag-gray">Ennemi commun : le manque de visibilité</span>
+    </div>
+  </div>
+
+  <!-- TON DE VOIX -->
+  <div class="section">
+    <div class="section-title">Ton de voix</div>
+    <div class="dodont">
+      <div class="do-box">
+        <div class="box-label">On dit</div>
+        <div class="box-item">"Vous gérez 5 chantiers. On vous met partout."</div>
+        <div class="box-item">"Bryan Mauvieux l'a fait. Vous aussi."</div>
+        <div class="box-item">"Un seul endroit. Toutes vos données."</div>
+        <div class="box-item">"Ce qui n'est pas piloté échappe."</div>
+        <div class="box-item">"Prêt en 48h. Pas de formation."</div>
+      </div>
+      <div class="dont-box">
+        <div class="box-label">On ne dit jamais</div>
+        <div class="box-item">"Valorisez vos équipes et savoir-faire"</div>
+        <div class="box-item">"Solution innovante qui révolutionne"</div>
+        <div class="box-item">"Racontez vos projets"</div>
+        <div class="box-item">"Communication visuelle"</div>
+        <div class="box-item">"Image de marque"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRILLE TARIFAIRE -->
+  <div class="section">
+    <div class="section-title">Grille tarifaire — version définitive</div>
+
+    <div class="alert alert-orange">
+      <strong>Règle commerciale :</strong> chaque entretien doit tendre vers un abonnement Impact ou Premium. Impact 790€/mois = 9 480€/an = 5× un reportage photo ponctuel. Qualifier la durée du chantier dès le 1er appel.
+    </div>
+
+    <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:.75rem;">Offres base — prestations ponctuelles</h3>
+    <div class="offer-grid">
+      <div class="offer-card">
+        <span class="badge badge-indigo">Base</span>
+        <div class="offer-name">Vidéo de présentation / reveal / savoir-faire</div>
+        <div class="offer-desc">Tournage sol (avec ou sans drone) · montage · gestion projet · déplacement<br>Ressources : Cadreur · Chef de projet · Monteur · 12h montage max</div>
+        <div class="offer-price">1 970€ <small>Vidéo 45s–2min · musique · logo · titrage · drone</small></div>
+      </div>
+      <div class="offer-card">
+        <span class="badge badge-indigo">Base</span>
+        <div class="offer-name">Vidéo + photos drone</div>
+        <div class="offer-desc">Tournage · autorisations · déplacement · montage · retouches<br>Ressources : Chef de projet · Monteur · Télépilote · 4h postprod + 2h retouche</div>
+        <div class="offer-price">1 270€ <small>Vidéo 30s–1min + 20 photos retouchées · Coût drone : 500€</small></div>
+      </div>
+      <div class="offer-card">
+        <span class="badge badge-indigo">Base</span>
+        <div class="offer-name">Reportage photo sol + drone</div>
+        <div class="offer-desc">Tournage · autorisations · déplacement · retouches<br>Ressources : Chef de projet · Télépilote · 4h postprod + 2h retouche</div>
+        <div class="offer-price">770€ <small>20 photos retouchées sol + drone · Coût drone : 500€</small></div>
+      </div>
+      <div class="offer-card">
+        <span class="badge badge-indigo">Base</span>
+        <div class="offer-name">Reportage photo sol</div>
+        <div class="offer-desc">Reportage sol · retouches · déplacement<br>Ressources : Chef de projet · Photographe · 3h photo + 2h retouche</div>
+        <div class="offer-price">570€ <small>20 photos retouchées</small></div>
+      </div>
+      <div class="offer-card" style="grid-column:1/-1">
+        <span class="badge badge-indigo">Base</span>
+        <div class="offer-name">Vidéo motion design</div>
+        <div class="offer-desc">Illustration · animation · voix-off · Ressources : Chef de projet · Réalisateur · Motion designer · Monteur · Comédien voix</div>
+        <div class="offer-price">3 970€ <small>Vidéo 30s–2min · musique · logo · titrage · voix-off · sous-titres</small></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:.75rem 0;">Options — en complément d'une offre base</h3>
+    <div class="offer-grid">
+      <div class="offer-card option">
+        <span class="badge badge-amber">Option</span>
+        <div class="offer-name">Reportage photo sol</div>
+        <div class="offer-desc">Même journée que le tournage · 3h photo + 2h retouche</div>
+        <div class="offer-price">320€ <small>20 photos retouchées</small></div>
+      </div>
+      <div class="offer-card option">
+        <span class="badge badge-amber">Option</span>
+        <div class="offer-name">Interviews</div>
+        <div class="offer-desc">Trame ITW + tournage · même journée · Cadreur · Chef de projet · Monteur</div>
+        <div class="offer-price">400€ <small>2–3 ITWs · synthés · transcription · sous-titres</small></div>
+      </div>
+      <div class="offer-card option">
+        <span class="badge badge-amber">Option</span>
+        <div class="offer-name">1 intervention drone</div>
+        <div class="offer-desc">Dates complémentaires · Télépilote</div>
+        <div class="offer-price">520€ <small>Vidéo drone + 10 photos retouchées</small></div>
+      </div>
+      <div class="offer-card option">
+        <span class="badge badge-amber">Option</span>
+        <div class="offer-name">1 tournage supplémentaire</div>
+        <div class="offer-desc">Drone + sol · dates complémentaires · Cadreur</div>
+        <div class="offer-price">970€ <small>1 journée de tournage</small></div>
+      </div>
+      <div class="offer-card option" style="grid-column:1/-1">
+        <span class="badge badge-amber">Option</span>
+        <div class="offer-name">DA / Motion design poussé</div>
+        <div class="offer-desc">En complément du forfait vidéo · Monteur</div>
+        <div class="offer-price">1 200€ <small>Animation complexe mots-clés + titrages avec direction artistique</small></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:.75rem 0;">Abonnements — min. 12 mois · prix par chantier/mois</h3>
+    <div class="offer-grid">
+      <div class="offer-card abonnement">
+        <span class="badge badge-orange">Abonnement</span>
+        <div class="offer-name">Impact</div>
+        <div class="offer-desc">1 caméra timelapse (install + désinstall) · monitoring + maintenance · SAV 48h · accès plateforme client · 1 reportage photo mensuel (sol + drone) · 1 montage mensuel timelapse · 1 vidéo timelapse fin de projet</div>
+        <div class="offer-price">790€/mois <small>min. 12 mois · soit 9 480€/an</small></div>
+      </div>
+      <div class="offer-card abonnement">
+        <span class="badge badge-orange">Abonnement</span>
+        <div class="offer-name">Premium</div>
+        <div class="offer-desc">Tout Impact, plus : film de fin de chantier (2 tournages avec interviews + reveal avec DA) · 2 changements d'axe timelapse offerts · 1 montage récapitulatif fin de projet</div>
+        <div class="offer-price">990€/mois <small>min. 12 mois · soit 11 880€/an</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPIs STRATÉGIQUES -->
+  <div class="section">
+    <div class="section-title">KPIs stratégiques — revus chaque mois</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Indicateur</th><th>Baseline mars 2026</th><th>Objectif juin 2026</th><th>Objectif déc. 2026</th></tr></thead>
+        <tbody>
+          <tr><td>CA BU total</td><td>504K€ (2025)</td><td>—</td><td class="kpi-target">800K€</td></tr>
+          <tr><td>CA hors Electra</td><td>~142K€ (2025)</td><td class="kpi-warn">165K€</td><td class="kpi-target">320K€</td></tr>
+          <tr><td>Part Electra dans CA</td><td class="kpi-red">71,7%</td><td class="kpi-warn">&lt; 65%</td><td class="kpi-target">&lt; 40%</td></tr>
+          <tr><td>Pipeline qualifié valorisé</td><td class="kpi-red">11 080€</td><td class="kpi-target">50 000€</td><td>—</td></tr>
+          <tr><td>Nb clients actifs hors Electra</td><td>16</td><td class="kpi-warn">20</td><td class="kpi-target">30+</td></tr>
+          <tr><td>Nb abonnements Impact signés</td><td>0</td><td class="kpi-warn">2</td><td class="kpi-target">6</td></tr>
+          <tr><td>Nb abonnements Premium signés</td><td>0</td><td class="kpi-warn">1</td><td class="kpi-target">3</td></tr>
+          <tr><td>CA récurrent abonnements/mois</td><td>0€</td><td class="kpi-warn">1 580€</td><td class="kpi-target">8 370€</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="section">
+    <div class="section-title">Roadmap 7 Séquences GTM</div>
+
+    <div class="seq-card">
+      <div class="seq-header">
+        <span class="seq-num">S0</span>
+        <span class="seq-title">Product Market Fit</span>
+        <span class="seq-status status-ok">✓ Validé</span>
+      </div>
+      <div class="seq-body">
+        <ul class="decision-list">
+          <li>Taux de closing 81% confirmé — problème = volume, pas closing</li>
+          <li>Cas Electra + DEMCY : résultats chiffrés disponibles</li>
+          <li>Action : Maintenir · Surveiller la concentration Electra</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="seq-card">
+      <div class="seq-header">
+        <span class="seq-num">S1</span>
+        <span class="seq-title">Fondations stratégiques</span>
+        <span class="seq-status status-warn">⚠ En cours</span>
+      </div>
+      <div class="seq-body">
+        <h4>Jalons</h4>
+        <ul class="checklist">
+          <li><span class="check-box"></span><span>Positionnement challenger formalisé en 1 page</span><span class="check-date">26 mars 2026</span></li>
+          <li><span class="check-box"></span><span>Grille tarifaire définitive validée par Julien</span><span class="check-date">26 mars 2026</span></li>
+          <li><span class="check-box"></span><span>Personas BTP et IRVE formalisés (douleurs, déclencheurs, messages)</span><span class="check-date">26 mars 2026</span></li>
+          <li><span class="check-box"></span><span>Supports commerciaux mis à jour</span><span class="check-date">9 avril 2026</span></li>
+          <li><span class="check-box"></span><span>Présentation IRVE dédiée (cas Electra central)</span><span class="check-date">23 avril 2026</span></li>
+        </ul>
+        <h4>Décisions prises</h4>
+        <ul class="decision-list">
+          <li>Positionnement : "Vos chantiers depuis n'importe où · Conduisez, prouvez, valorisez"</li>
+          <li>Grille définitive : 5 offres base + 5 options + 2 abonnements (Impact / Premium)</li>
+          <li>Ancienne grille "C-..." abandonnée</li>
+          <li>Abonnements Impact (790€/mois) et Premium (990€/mois) = centre de gravité commercial</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="seq-card">
+      <div class="seq-header">
+        <span class="seq-num">S2</span>
+        <span class="seq-title">Architecture organisationnelle</span>
+        <span class="seq-status status-warn">⚠ En cours</span>
+      </div>
+      <div class="seq-body">
+        <h4>Jalons</h4>
+        <ul class="checklist">
+          <li><span class="check-box"></span><span>KPIs Maxime configurés dans Sellsy + tableur partagé</span><span class="check-date">2 avril 2026</span></li>
+          <li><span class="check-box"></span><span>3 deals sans montant complétés (NGE GC, Colas Rail, Usine Duval)</span><span class="check-date">2 avril 2026</span></li>
+          <li><span class="check-box"></span><span>Playbook sales V1 amorcé (script + objections BTP)</span><span class="check-date">2 avril 2026</span></li>
+          <li><span class="check-box"></span><span>Pixel Meta installé (GTM ou Hostinger)</span><span class="check-date">9 avril 2026</span></li>
+          <li><span class="check-box"></span><span>LGM configuré · Séquences BTP + IRVE actives</span><span class="check-date">9 avril 2026</span></li>
+          <li><span class="check-box"></span><span>Playbook IRVE complété</span><span class="check-date">23 avril 2026</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="seq-card">
+      <div class="seq-header">
+        <span class="seq-num">S3</span>
+        <span class="seq-title">Infrastructure marketing</span>
+        <span class="seq-status status-err">✗ À construire</span>
+      </div>
+      <div class="seq-body">
+        <h4>Jalons</h4>
+        <ul class="checklist">
+          <li><span class="check-box"></span><span>Étude de cas DEMCY publiée site + LinkedIn</span><span class="check-date">16 avril 2026</span></li>
+          <li><span class="check-box"></span><span>Étude de cas Electra publiée (version IRVE)</span><span class="check-date">23 avril 2026</span></li>
+          <li><span class="check-box"></span><span>1er post LinkedIn Maxime (format résultat client)</span><span class="check-date">16 avril 2026</span></li>
+          <li><span class="check-box"></span><span>Newsletter M1 envoyée</span><span class="check-date">7 mai 2026</span></li>
+          <li><span class="check-box"></span><span>Guide PDF téléchargeable lancé</span><span class="check-date">28 mai 2026</span></li>
+          <li><span class="check-box"></span><span>Programme referral communiqué à 5 clients</span><span class="check-date">14 mai 2026</span></li>
+        </ul>
+        <h4>KPIs S3</h4>
+        <div class="table-wrap" style="margin-top:.5rem">
+          <table>
+            <thead><tr><th>Indicateur</th><th>Baseline</th><th>Objectif M+3</th></tr></thead>
+            <tbody>
+              <tr><td>Posts LinkedIn Maxime/mois</td><td>0</td><td class="kpi-target">4</td></tr>
+              <tr><td>Études de cas publiées</td><td>0</td><td class="kpi-target">2</td></tr>
+              <tr><td>Abonnés page LinkedIn</td><td>497</td><td class="kpi-target">600</td></tr>
+              <tr><td>Newsletter envoyée</td><td>0</td><td class="kpi-target">1/mois</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-card">
+      <div class="seq-header">
+        <span class="seq-num">S4</span>
+        <span class="seq-title">Activation acquisition</span>
+        <span class="seq-status status-err">✗ Pipeline vide</span>
+      </div>
+      <div class="seq-body">
+        <h4>Jalons</h4>
+        <ul class="checklist">
+          <li><span class="check-box"></span><span>Outbound multicanal LGM actif (BTP + IRVE)</span><span class="check-date">9 avril 2026</span></li>
+          <li><span class="check-box"></span><span>1er petit déjeuner clients réalisé</span><span class="check-date">21 mai 2026</span></li>
+          <li><span class="check-box"></span><span>2 événements sectoriels identifiés + inscrits</span><span class="check-date">7 mai 2026</span></li>
+          <li><span class="check-box"></span><span>Meta Ads lancées (si pixel validé)</span><span class="check-date">4 juin 2026</span></li>
+          <li><span class="check-box"></span><span>Revue pipeline 90 jours avec Julien</span><span class="check-date">11 juin 2026</span></li>
+        </ul>
+        <h4>Séquençage canaux</h4>
+        <div class="table-wrap" style="margin-top:.5rem">
+          <table>
+            <thead><tr><th>Canal</th><th>Timing</th><th>Condition</th></tr></thead>
+            <tbody>
+              <tr><td>Outbound multicanal (call + LI + email)</td><td>Maintenant</td><td>S1 bouclé</td></tr>
+              <tr><td>Référral formalisé</td><td>Avril</td><td>Programme défini</td></tr>
+              <tr><td>Événements BTP/IRVE</td><td>Avril+</td><td>2 inscrits</td></tr>
+              <tr><td>Petits déjeuners clients</td><td>Avril (1/mois)</td><td>1er invité confirmé</td></tr>
+              <tr><td>Meta Ads</td><td>Juin</td><td>6-8 sem. pixel</td></tr>
+              <tr><td>Google Ads</td><td>Q3 2026</td><td>Site refait</td></tr>
+              <tr><td>LinkedIn Ads</td><td>Q4 2026</td><td>Meta validées</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-card">
+      <div class="seq-header">
+        <span class="seq-num">S5</span>
+        <span class="seq-title">Activation client</span>
+        <span class="seq-status status-warn">⚠ Partiel</span>
+      </div>
+      <div class="seq-body">
+        <h4>Jalons</h4>
+        <ul class="checklist">
+          <li><span class="check-box"></span><span>Parcours client post-signature formalisé (J0/J30/J60/J90)</span><span class="check-date">30 avril 2026</span></li>
+          <li><span class="check-box"></span><span>Règle upsell abonnement documentée dans le playbook</span><span class="check-date">30 avril 2026</span></li>
+          <li><span class="check-box"></span><span>5 emails témoignages envoyés (Electra, DEMCY + 3 clients)</span><span class="check-date">30 avril 2026</span></li>
+          <li><span class="check-box"></span><span>3 témoignages collectés</span><span class="check-date">31 mai 2026</span></li>
+          <li><span class="check-box"></span><span>2 vidéos témoignages (Electra + DEMCY)</span><span class="check-date">Q3 2026</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="seq-card">
+      <div class="seq-header">
+        <span class="seq-num">S6</span>
+        <span class="seq-title">Optimisation continue</span>
+        <span class="seq-status status-err">✗ À instrumenter</span>
+      </div>
+      <div class="seq-body">
+        <h4>Dashboard mensuel — à remplir par Julien le 1er de chaque mois</h4>
+        <div class="table-wrap" style="margin-top:.5rem">
+          <table>
+            <thead><tr><th>KPI</th><th>Mars</th><th>Avril</th><th>Mai</th><th>Juin</th></tr></thead>
+            <tbody>
+              <tr><td>CA BU (cumulé 2026)</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>CA hors Electra</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>Nb nouveaux clients signés</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>Pipeline qualifié total</td><td>11 080€</td><td></td><td></td><td></td></tr>
+              <tr><td>Taux closing devis → signé</td><td>81%</td><td></td><td></td><td></td></tr>
+              <tr><td>Nb abonnements Impact signés</td><td>0</td><td></td><td></td><td></td></tr>
+              <tr><td>Nb abonnements Premium signés</td><td>0</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISION DIVERSIFICATION -->
+  <div class="section">
+    <div class="section-title">Vision diversification — horizon 2027-2028</div>
+    <div class="vision-grid">
+      <div class="vision-card">
+        <div class="vision-horizon">T3 2026</div>
+        <div class="vision-title">Thermographie drone IRVE</div>
+        <div class="vision-desc">Formation pilote IR + capteur embarquable (2–5K€). Premier client : Electra. Upsell sur chantiers existants.</div>
+      </div>
+      <div class="vision-card">
+        <div class="vision-horizon">T1 2027</div>
+        <div class="vision-title">Partenariat capteurs</div>
+        <div class="vision-desc">Accord commercial avec Azimut Monitoring ou SIM Engineering. Zéro capex — commission 15–25% sur contrats apportés.</div>
+      </div>
+      <div class="vision-card">
+        <div class="vision-horizon">2027–2028</div>
+        <div class="vision-title">Plateforme unifiée</div>
+        <div class="vision-desc">Image + data corrélées dans le temps. Une seule interface client. Le système nerveux du chantier.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOURNAL DES SESSIONS -->
+  <div class="section">
+    <div class="section-title">Journal des sessions</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Type</th><th>Participants</th><th>Thèmes traités</th><th>Décisions</th><th>Prochaine étape</th></tr></thead>
+        <tbody>
+          <tr class="journal-row"><td>26 mars 2026</td><td>Atelier S1</td><td>Julien + Maxime + Thibault</td><td>Positionnement · Personas · Grille tarifaire</td><td>Positionnement validé · Grille définitive validée</td><td>Atelier S2 · 2 avril</td></tr>
+          <tr class="journal-row"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="journal-row"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="journal-row"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+<script>
+// ── ÉDITEUR INLINE ──
+const STORE_KEY = 'strategie_edits_v1';
+
+function makeEditable(el, id) {
+  el.setAttribute('contenteditable', 'false');
+  el.setAttribute('data-editable', id);
+  el.setAttribute('data-original', el.innerHTML);
+}
+
+function initEditables() {
+  let idx = 0;
+  const selectors = [
+    'h1','h2','h3','h4',
+    '.tagline','.sub','.ptag',
+    '.meta-item',
+    '.box-item','.box-label',
+    '.offer-name','.offer-desc','.offer-price',
+    '.seq-title','.seq-status',
+    '.seq-body li span:nth-child(2)',
+    '.decision-list li',
+    '.section-title',
+    '.alert',
+    '.vision-title','.vision-desc','.vision-horizon',
+    '.journal-row td',
+    'td','th',
+    '.check-date'
+  ];
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (!el.closest('[data-editable]') && !el.querySelector('[data-editable]')) {
+        makeEditable(el, 'e' + (idx++));
+      }
+    });
+  });
+}
+
+function loadSaved() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    document.querySelectorAll('[data-editable]').forEach(el => {
+      const id = el.getAttribute('data-editable');
+      if (saved[id] !== undefined) el.innerHTML = saved[id];
+    });
+  } catch(e) {}
+}
+
+function saveAll() {
+  const data = {};
+  document.querySelectorAll('[data-editable]').forEach(el => {
+    const id = el.getAttribute('data-editable');
+    const orig = el.getAttribute('data-original');
+    if (el.innerHTML !== orig) data[id] = el.innerHTML;
+  });
+  localStorage.setItem(STORE_KEY, JSON.stringify(data));
+  const saved = document.getElementById('eb-saved');
+  saved.style.display = 'inline';
+  setTimeout(() => saved.style.display = 'none', 2000);
+}
+
+function resetAll() {
+  if (!confirm('Remettre tous les textes à leur valeur originale ?')) return;
+  localStorage.removeItem(STORE_KEY);
+  document.querySelectorAll('[data-editable]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-original');
+  });
+}
+
+let editMode = false;
+
+function toggleEdit() {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  const btn = document.getElementById('eb-toggle');
+  if (editMode) {
+    btn.textContent = '✏️ Mode édition ON';
+    btn.classList.add('active');
+    document.querySelectorAll('[data-editable]').forEach(el => el.setAttribute('contenteditable','true'));
+  } else {
+    btn.textContent = '✏️ Mode édition';
+    btn.classList.remove('active');
+    document.querySelectorAll('[data-editable]').forEach(el => el.setAttribute('contenteditable','false'));
+    saveAll();
+  }
+}
+
+// Auto-save on each change
+document.addEventListener('input', e => {
+  if (e.target.hasAttribute('data-editable')) {
+    clearTimeout(window._saveTimer);
+    window._saveTimer = setTimeout(saveAll, 1500);
+  }
+});
+
+// Inject bar
+const bar = document.createElement('div');
+bar.className = 'edit-bar';
+bar.innerHTML = `
+  <span class="eb-logo">C.lechantier</span>
+  <span class="eb-hint">Double-cliquez sur n'importe quel texte pour l'éditer · Sauvegarde auto</span>
+  <span class="eb-saved" id="eb-saved">✓ Sauvegardé</span>
+  <button class="eb-reset" onclick="resetAll()">↺ Réinitialiser</button>
+  <button class="eb-toggle" id="eb-toggle" onclick="toggleEdit()">✏️ Mode édition</button>
+`;
+document.body.prepend(bar);
+
+initEditables();
+loadSaved();
+
+// Double-click to enter edit mode automatically
+document.addEventListener('dblclick', e => {
+  const el = e.target.closest('[data-editable]');
+  if (el && !editMode) toggleEdit();
+});
+</script>
+</body>
+</html>
