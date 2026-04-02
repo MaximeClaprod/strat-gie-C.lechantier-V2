@@ -1,0 +1,1 @@
+# strat-gie-C.lechantier-V2
